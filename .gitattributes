@@ -1,0 +1,22 @@
+# 仓库内统一 LF —— 但脚本必须保持 LF，否则 macOS 下双击失效。
+* text=auto eol=lf
+
+*.sh        text eol=lf
+*.command   text eol=lf
+*.py        text eol=lf
+*.md        text eol=lf
+*.json      text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+
+# 二进制
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.zip       binary
+*.pdf       binary
+
+# 让 GitHub 语言统计正确
+*.sh        linguist-language=Shell
+*.command   linguist-language=Shell

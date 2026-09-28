@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pojia Memory"
+  short_description: "Cross-platform memory, dump, runtime, and structure analysis"
+  default_prompt: "Use $pojia-memory to analyze this process, dump, pointer chain, or runtime structure."

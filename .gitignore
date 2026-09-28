@@ -1,0 +1,22 @@
+# 运行时产物
+破甲日志.txt
+*.pojiabak
+_archive/
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+
+# 临时
+*.tmp
+*.bak-agent

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pojia Evasion"
+  short_description: "AV/EDR evasion research, shellcode engineering, and detection bypass for authorized red-team"
+  default_prompt: "Use $pojia-evasion to profile detection coverage and produce authorized bypass research."

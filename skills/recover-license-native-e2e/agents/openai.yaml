@@ -1,0 +1,4 @@
+interface:
+  display_name: "Native License Recovery"
+  short_description: "Prove native license and feature behavior end to end"
+  default_prompt: "Use $recover-license-native-e2e to recover this application license flow and prove native feature parity end to end."

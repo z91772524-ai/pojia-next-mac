@@ -1,0 +1,59 @@
+name: security
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 门禁 1 —— 主程序必须零网络调用
+        run: |
+          set -e
+          # 只审主程序与注入脚本（skills/ 是第三方技能包，不在本门禁范围；
+          # 其中 urllib.parse 只用于 URL 解码，不发请求）。
+          if grep -RnE 'import requests|import socket|urllib\.request|http\.client|ftplib|smtplib|paramiko' \
+               --include='*.py' wb-macos.py build-index.py inject-workbuddy-identity.py codex/scripts/ ; then
+            echo '[!] 发现网络相关调用'; exit 1
+          fi
+          echo 'OK: 零网络调用'
+
+      - name: 门禁 2 —— 代码/脚本里不得残留换皮标识
+        run: |
+          set -e
+          # 说明：*.md（README / 反抄袭通告）会**故意**引用"海鸥装载台"作为举证对象，
+          # 因此这里只扫可执行代码与配置，不扫文档。
+          if grep -RniE 'seagull|海鸥|薯条' \
+               --include='*.sh' --include='*.py' --include='*.json' --include='*.command' . ; then
+            echo '[!] 发现残留换皮标识'; exit 1
+          fi
+          echo 'OK: 代码无残留'
+
+      - name: 门禁 3 —— 封条必须可用（改一字即拒绝运行）
+        run: |
+          set -e
+          python3 wb-macos.py --version
+          cp wb-macos.py /tmp/t.py
+          sed -i 's/CLOUDMEM_MAX = 10000/CLOUDMEM_MAX = 99999/' /tmp/t.py
+          set +e
+          out="$(python3 /tmp/t.py --version 2>&1)"; code=$?
+          set -e
+          if [ "$code" != "3" ]; then
+            echo "[!] 篡改后未按预期拒绝运行（退出码 $code）"; echo "$out"; exit 1
+          fi
+          echo 'OK: 封条生效（篡改退出码 3）'
+
+      - name: 门禁 4 —— 立场文案不得出现在源码里
+        run: |
+          set -e
+          # 这些串只应存在于加密块内（运行时解密）；源码中检索到即为保护被绕开
+          for s in '破甲自检成功' '你已被圈:' '二改死全家'; do
+            if grep -F -- "$s" wb-macos.py; then
+              echo "[!] 源码中出现应加密的立场文案: $s"; exit 1
+            fi
+          done
+          echo 'OK: 立场文案未泄露到源码'

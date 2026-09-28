@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pojia Reverse"
+  short_description: "Deep binary, mobile, game, and protocol reversing"
+  default_prompt: "Use $pojia-reverse to triage and deeply reverse this binary or application artifact."
