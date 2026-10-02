@@ -3,6 +3,9 @@
 *.pojiabak
 _archive/
 
+# 打包产物（release.py 生成，体积大且可重建）
+dist/
+
 # Python
 __pycache__/
 *.pyc

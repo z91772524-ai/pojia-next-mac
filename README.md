@@ -6,6 +6,8 @@
 覆盖 **WorkBuddy** 与 **Codex** 两个客户端，一份 `persona.md` 两端共用、口径完全一致。
 纯 Python 标准库 + Bash，**零第三方依赖**、改前必留备份、随时一键还原。
 
+[![Release](https://img.shields.io/github/v/release/z91772524-ai/pojia-next-mac?label=release&color=2ea043)](https://github.com/z91772524-ai/pojia-next-mac/releases/latest)
+[![security](https://github.com/z91772524-ai/pojia-next-mac/actions/workflows/security.yml/badge.svg)](https://github.com/z91772524-ai/pojia-next-mac/actions/workflows/security.yml)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS-000000)](#)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)
@@ -44,7 +46,7 @@
 
 ### 1️⃣ 下载
 打开 [**Releases 页面**](https://github.com/z91772524-ai/pojia-next-mac/releases/latest)，
-下载 `pojia-next-mac-v1.0.7.zip`，解压到任意文件夹（桌面就行）。
+下载 `pojia-next-mac-v1.0.8.zip`，解压到任意文件夹（桌面就行）。
 
 ### 2️⃣ 双击
 进解压出来的文件夹，双击 **`start-console.command`** —— 会出来一个终端菜单。
@@ -199,11 +201,80 @@ WorkBuddy 的其它靶点是**磁盘上的静态文件**，客户端升级/校�
 
 ## 🔬 安全审查（你可以自己验）
 
+> **CI 每次提交都会跑**：`bandit` / `semgrep` / 敏感调用审计 / 回归测试四道门禁
+> （徽章实时状态见页面顶部）。下面几条是你可以**自己动手**复现的。
+
 1. **零网络**：全仓库 `grep -rn "requests\|urllib\|socket\|http" *.py` —— 不含网络调用。
 2. **零依赖**：只用 Python 标准库 + 系统 `bash`。
 3. **先只读、再预演**：`--status` 只读；`--dry-run` 只列改动不落盘。
 4. **可还原**：`--revert` 按 `.pojiabak` 还原。
 5. **封条可验**：故意改一个字符，脚本应当**拒绝运行**（这就是它该有的行为）。
+
+### 校验下载的文件没被篡改（SHA256）
+
+`Releases` 页面上每个附件都会显示 **sha256 摘要**，下载后对照一下即可：
+
+```bash
+# macOS / Linux（把 <下载的zip> 换成实际文件名）
+shasum -a 256 <下载的zip>
+```
+
+```powershell
+# Windows PowerShell
+Get-FileHash .\<下载的zip> -Algorithm SHA256
+```
+
+包内另有一份 `SHA256SUMS.txt`（由本仓库的 `release.py` 在打包时生成），
+可以用它逐项核对**解压出来的每一个文件**：
+
+```bash
+cd 解压出来的目录
+shasum -a 256 -c SHA256SUMS.txt
+```
+
+> 为什么值得做这一步：本项目已被多次**换皮二改**（见下方[反抄袭通告](#-反抄袭通告)）。
+> 校验摘要能确认你拿到的是**原版**，而不是被人动过手脚的版本。
+
+---
+
+## 📋 版本记录
+
+<details>
+<summary><b>每个版本改了什么</b>（点开）</summary>
+
+### v1.0.8 —— 门面与发布流程对齐上游；附件不再"散一地"
+
+**这一版没有改注入逻辑**，改的是**交付形态**（下载解压体验 + 可校验性 + 文档口径）。
+
+| 做了什么 | 为什么 |
+|---|---|
+| Release 附件改为**带外层文件夹** `pojia-next-mac-v1.0.8/` | v1.0.7 的附件是**平的** —— 19 个顶层文件直接铺在 zip 根，按 README 说的"解压到桌面"会把桌面弄乱 |
+| 新增 `release.py` + **包内 `SHA256SUMS.txt`** | 发布从"手工打 zip"变成一条命令；用户可 `shasum -a 256 -c` 逐项校验下载内容 |
+| README 补齐 **Release / CI 徽章**、**📋 版本记录**、**SHA256 校验说明** | 与上游 [pojia-next](https://github.com/z91772524-ai/pojia-next) 的门面口径对齐（上游有，本仓库此前没有） |
+| 仓库描述与 Topics 补上 **Codex** | 本移植版一直支持 Codex 双锚点注入，但仓库描述里只写了 WorkBuddy —— **与实际不符** |
+
+### v1.0.7 —— 装载台 + 六层靶点 + 封条完整性保护
+
+**这一版把 macOS 移植版做成了一个可直接交付的「装载台」**，不再是零散脚本。
+
+| 做了什么 | 为什么 |
+|---|---|
+| 新增 **`pojia-console.sh` 统一终端菜单** + `start-console.command` 双击启动器 | macOS 上双击即用：注入 / 清理 / 守护 / 归档 / 查看靶点 全在一个菜单里，不用记命令 |
+| **Codex 端双锚点**：`config.toml` 的 `model_instructions_file`（含每个 `[profiles.*]` 段）+ `AGENTS.md` 人格锚点 | 单挂一处会被"追加式上下文"稀释；两处一起挂才稳 |
+| **WorkBuddy 六层靶点**：模板政策块 / `product.json` / 命令与网页钩子 / 插件副本 / 运行时缓存 / **云记忆 `memoryBlock`** | 前五层是磁盘静态文件，客户端升级可能被覆盖；第 6 层是账号级云记忆、每轮对话都进系统提示词，**改不到软件本体也能生效** |
+| 加回**加密保护块 + 源码级封条** + `INTEGRITY_ANCHOR` | 本仓库是在「海鸥装载台」删掉署名与封条之后**恢复署名、恢复封条与给 Agent 的声明**重新发布的（见 [反抄袭通告](反抄袭通告.md)） |
+| `persona.md` 与上游 `pojia-next` **同一份**（sha256 一致） | 两端口径完全一致，不各改各的 |
+| 新增 `release.py`（借鉴上游） | 打包 Release 附件 + 生成 `SHA256SUMS.txt`，一条命令搞定，不再手工打 zip |
+
+> 本仓库 **2026-09-28 首次公开发布**。更早的 `1.0.0`~`1.0.6` 是开发期内部编号，未单独打 tag。
+
+### 上游版本对照
+
+本移植版跟随 [pojia-next（破甲next）](https://github.com/z91772524-ai/pojia-next) 的注入纪律，
+但不跟随它的版本号：上游 v8.x 的多客户端适配（DSH / ZCode / Cursor / Claude 等）
+**不适用于 macOS**，详见 [六个客户端 vs 本移植版](#六个客户端-vs-本移植版)。
+
+</details>
 
 ---
 
@@ -252,6 +323,8 @@ WorkBuddy 的其它靶点是**磁盘上的静态文件**，客户端升级/校�
 | `wb-guard.sh` | 守护校准脚本（launchd 调用） |
 | `build-index.py` | 技能索引构建器（自包含兜底） |
 | `prune-backups.sh` | 备份保留策略（保留最近 N 份，其余归档） |
+| `release.py` | 发布助手：打包 Release 附件 + 生成 `SHA256SUMS.txt`（借鉴上游 `pojia-next`） |
+| `SHA256SUMS.txt` | 校验清单（由 `release.py` 生成，随 Release 附件一起分发） |
 | `persona.md` | **唯一共用人格源**（WorkBuddy + Codex 共用） |
 | `README-console.md` | 装载台（终端菜单）专门说明书 |
 | `使用说明.md` | 完整图文说明书 |
