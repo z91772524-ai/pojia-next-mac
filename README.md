@@ -1,4 +1,4 @@
-# 破甲next · macOS 版（pojia-next-mac）
+# 破甲next · macOS 版 v1.0.8（pojia-next-mac）
 
 **一句话：把你 macOS 上那几个 AI 客户端「自己改不到的提示词」，换成你自己写的那份。**
 
