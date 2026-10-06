@@ -23,8 +23,8 @@ import zipfile
 REPO = os.path.dirname(os.path.abspath(__file__))
 DIST = os.path.join(REPO, "dist")
 
-# 不进包的东西：版本控制、运行时产物、打包产物、系统垃圾
-SKIP_DIRS = {".git", "dist", "_archive", "__pycache__", ".pytest_cache"}
+# 不进包的东西：版本控制、运行时产物、打包产物、系统垃圾、开发期回归测试
+SKIP_DIRS = {".git", "dist", "_archive", "__pycache__", ".pytest_cache", "_回归测试"}
 SKIP_FILES = {"破甲日志.txt", ".DS_Store", "Thumbs.db", "desktop.ini"}
 SKIP_SUFFIX = (".pojiabak", ".pyc", ".pyo", ".log")
 

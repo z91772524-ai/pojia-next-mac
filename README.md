@@ -1,4 +1,4 @@
-# 破甲next · macOS 版 v1.0.8（pojia-next-mac）
+# 破甲next · macOS 版 v1.0.9（pojia-next-mac）
 
 **一句话：把你 macOS 上那几个 AI 客户端「自己改不到的提示词」，换成你自己写的那份。**
 
@@ -46,7 +46,7 @@
 
 ### 1️⃣ 下载
 打开 [**Releases 页面**](https://github.com/z91772524-ai/pojia-next-mac/releases/latest)，
-下载 `pojia-next-mac-v1.0.8.zip`，解压到任意文件夹（桌面就行）。
+下载 `pojia-next-mac-v1.0.9.zip`，解压到任意文件夹（桌面就行）。
 
 ### 2️⃣ 双击
 进解压出来的文件夹，双击 **`start-console.command`** —— 会出来一个终端菜单。
