@@ -1,4 +1,4 @@
-# 破甲next · macOS v1.0.9 —— SHA256 校验清单
+# 破甲next · macOS v1.1.0 —— SHA256 校验清单
 # 校验方法（macOS / Linux）:
 #   cd 解压出来的目录 && shasum -a 256 -c SHA256SUMS.txt
 # 校验方法（Windows PowerShell）:
@@ -9,8 +9,10 @@
 738bc48bd7e415a7561378b1dbff4c95374757085ae044c1b662120f2c6f50f1  .gitignore
 cf1e09ddd43b7d9927ee4298f4a87b1d6c0a06b33281612e1d86137055fd4d3c  LICENSE
 eceba71b8fb60b113253503ed22c62469299245f961fc5d957b6993f2ef1ef35  README-console.md
-86606089fe4f527b980a820f3ffe9ebf43db673d66a6eb89c0e893a2bf74d6a2  README.md
-d6f917c484e6a48fcf8b90ef09cde0286c3d86e5dead48b42faf0dae94fb2df5  VERSION
+8fe78320e39044e9c1808fd24d92647a7fbba4fe0a8cecc17abc4fa5027014fb  README.md
+1575e1af4a95f12f70b4ee6a6adce8160953d93ea17dc2611b90883ccc3ad3b8  VERSION
+b14c242aacf70b1e6fed183c17f2ec046349fc205e589e262e5f7191cf92cc7c  _tmp/repack_mac.py
+9997b9855d821bb8ddb9effdbf8a3e4f4a8e80932828040f61cb99a85dbac605  _tmp/wb_old.py
 46871d8dc1038ba3b4511d499f0d1b07ad63e3ebe43f7dc9bf29c30fa1a347f2  build-index.py
 5387ed75ac5eb95bfdad30a9604c02f8223baa44f811791b7a721a0b5639a1da  codex/scripts/build-skill-index.sh
 5702acb4ce06830d654f917c88e55f27b3e7487ef0fdf9ff005b61c02ba73ee8  codex/scripts/clean-pojia.sh
@@ -464,7 +466,7 @@ cd5cdbc9a380a19e21dba4aa9a653bf416bcf9823c4cc71cc557b44b9f9a7718  skills/shadowt
 97c54111804c7539f1ddb5e9c06cd0fc6287c825a5dfb5abce3416d951ee8722  skills/supply-chain-security/references/sbom-sca-methodology.md
 d4d7a4eaf5410a642ccd84725e482c4a6090598a0af77722290f9fab829eef99  start-console.command
 2d1bc2855e65e5e6fe670e933384e8dbbcff99a82b5de524d7cc63d475421ced  wb-guard.sh
-9997b9855d821bb8ddb9effdbf8a3e4f4a8e80932828040f61cb99a85dbac605  wb-macos.py
+f230ebffb2e3a1efd47848802d6edab700642929e2f1d44c5ee6ff2fe70acba4  wb-macos.py
 45402bb26a4e0ae36e6151deb3c47f7eaf7c08c600a192cb09fc3052f6ba0a9f  使用说明.md
 df205032f0f968308d5e80370dcf1c8afb2a7ee424709f1689fc7e73e7245ace  反抄袭通告.md
-ecef4c09555725c9c1bb72496f7dda359cbce3b37cdb9a46ff20af2759be082a  更新日志.md
+29da55bc032c0fbffb48b5ca2a5c2c8f363ec09e941f3db295595db11aaa0f78  更新日志.md
